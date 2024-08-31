@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/AddAdmin.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Panel</h2>
+            </div>
+            <ul class="nav">
+                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="upload.html" class="active"><i class="fas fa-user-plus"></i> Upload Opportunities</a></li>
+                <li><p><a href="Rejected.html"> <i class="fa-solid fa-envelope"></i> Rejected Letters</a></p><br></li>
+                <li><a href="allLetters.html"><i class="fas fa-users-cog"></i>All letters</a></li>
+                <li><a href="approvedLetters.html"><i class="fas fa-cog"></i> Approved letters</a></li>
+                <li><a href="pending.html"><i class="fas fa-envelope"></i> Pending letters</a></li>
+                <li><a href="logoutLink"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </aside>
+        
+        <main class="main-content">
+            <h1>Add New Admin</h1>
+            <form id="adminForm">
+                <label for="name">Email:</label>
+                <input type="email" id="email" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+
+                <button type="submit">Add Admin</button>
+            </form>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+                const baseRoute = 'http://localhost:6001'
+                document.getElementById('adminForm').addEventListener('submit', async function(event) {
+                event.preventDefault();
+                
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+
+                try {
+                    const response = await fetch(`${baseRoute}/admin/register`, { 
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    if (response.status === 201) {
+                        alert('Admin added successfully');
+                        window.location.href = 'success.html';
+                        document.getElementById('adminForm').reset();
+                    } else {
+                        alert('Failed to add admin');
+                    }
+                } catch (error) {
+                    console.error('Error adding admin:', error);
+                    alert('An error occurred. Please try again.');
+                }
+            });
+
+            
+    </script>
+</body>
+</html>

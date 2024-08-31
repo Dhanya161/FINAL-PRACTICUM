@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard/KNUST Practicum</title>
+    <link rel="stylesheet" href="../../student/css/styles.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/668d0bdd5f.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            width: 66.67%; /* Set to two-thirds of the original width */
+            margin: 0 auto; /* Center the chart */
+            padding: 20px;
+        }
+
+        canvas {
+            width: 100% !important; /* Make canvas fit the container */
+            height: auto !important; /* Maintain aspect ratio */
+        }
+        .tools h4 {
+            font-weight: bold;
+            color: rgb(255, 13, 0);
+        }
+    </style>
+</head>
+<body>
+    <div id="mainContent" class="overall">
+        <div class="tools">
+            <h3>KNUST PRACTICUM</h3>
+            <h4>ADMIN</h4>
+            <div class="sections">
+                <p><a href="dashboard.html"><i class="fa-solid fa-house"></i>  Dashboard</a></p><br>
+                <p><a href="pending.html"><i class="fa-solid fa-envelope-open-text"></i> Pending Letters</a></p><br>
+                <p><a href="approvedLetters.html"><i class="fa-solid fa-envelope-open"></i> Approved Letters</a></p><br>
+                <p><a href="allLetters.html"> <i class="fa-solid fa-envelope"></i> All Letters</a></p><br>
+                <p><a href="Rejected.html"> <i class="fa-solid fa-envelope"></i> Rejected Letters</a></p><br>
+                <p><a href="upload.html"> <i class="fa-solid fa-upload"></i></i> Upload Opportunities</a></p><br>
+                <p><a href="AddAdmin.html"> <i class="fas fa-user-plus"></i> Manage admins</a></p>  
+            </div>
+            <div class="sections" id="bottom">
+                <p><a href="#" id="logoutLink"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></p><br>
+            </div>
+        </div>
+        <div class="workarea">
+            <div class="top-nav">
+                <!-- <div class="tbar">
+                    <h3>Activity</h3>
+                    <i class="fa-solid fa-bell" id="bell"></i>
+                </div> -->
+            </div>
+            <h2 id="dashboard">Dashboard</h2>
+            <nav>
+                <h3><a id="link1" href="pending.html">Pending letters</a></h3>
+                <h3><a id="link2" href="approved.html">Approved letters</a></h3>
+                <h3><a id="link3" href="allLetters.html">Total letters</a></h3>
+                <h3><a id="link4" href="Rejected.html">Rejected letters</a></h3>
+            </nav>
+            <div class="cards">
+                <div class="Pending letters" id="card1">
+                    <h3 id="showPending"></h3>
+                    <a href="pending.html"><h4>Pending Letters</h4></a>
+                </div>
+                <div class="Approved letters" id="card2">
+                    <h3 id="showApproved"></h3>
+                    <a href="approvedLetters.html"><h4>Approved Letters</h4></a>
+                </div>
+                <div class="Total Letters" id="card3">
+                    <h3 id="showTotal"></h3>
+                    <a href="allLetters.html"><h4>Total Letters</h4></a>
+                </div>
+                <div class="Rejected Letters" id="card4">
+                    <h3 id="showRejected"></h3>
+                    <a href="Rejected.html"><h4>Rejected Letters</h4></a>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="lettersChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        // Fetch and display letter data
+        document.addEventListener('DOMContentLoaded', async function() {
+            const fetchLetters = async () => {
+                try {
+                    const response = await fetch(`http://localhost:6001/letter/all`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${'token'}`  // Replace 'token' with the actual token if needed
+                        }
+                    });
+
+                    if (response.ok) {
+                        const letters = await response.json();
+
+                        const totalLetters = letters.length;
+                        const approvedLetters = letters.filter(letter => letter.status === 'approved').length;
+                        const pendingLetters = letters.filter(letter => letter.status === 'pending').length;
+                        const rejectedLetters = letters.filter(letter => letter.status === 'rejected').length;
+
+                        document.getElementById('showTotal').textContent = totalLetters;
+                        document.getElementById('showApproved').textContent = approvedLetters;
+                        document.getElementById('showPending').textContent = pendingLetters;
+                        document.getElementById('showRejected').textContent = rejectedLetters;
+                        
+                        // Generate chart
+                        const ctx = document.getElementById('lettersChart').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Approved', 'Rejected', 'Pending', 'Total'],
+                                datasets: [{
+                                    label: 'Number of Letters',
+                                    data: [approvedLetters, rejectedLetters, pendingLetters, totalLetters],
+                                    backgroundColor: ['#4CAF50', '#F44336', '#FFC107', '#2196F3'],
+                                    borderColor: ['#388E3C', '#C62828', '#F57F17', '#1976D2'],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+                        alert('Failed to fetch letters summary.');
+                    }
+                } catch (error) {
+                    console.error('Error fetching letters summary:', error);
+                    alert('An error occurred while fetching the letters summary.');
+                }
+            };
+
+            fetchLetters();
+        });
+
+        // Logout functionality
+        document.getElementById('logoutLink').addEventListener('click', function() {
+            // Clear cookies or local storage if used for authentication
+            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+            // Redirect to login page
+            window.location.href = 'signin.html';
+        });
+
+    </script>
+</body>
+</html>

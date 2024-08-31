@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Letter</title>
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
+    <script src="https://kit.fontawesome.com/668d0bdd5f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/letterpage.css">
+    <style>
+        .letter-footer {
+            border-top: 2px solid black;
+            font-size: 0.8em;
+            display: flex;
+            justify-content: space-between;
+            padding-top: 10px;
+            margin-top: 50px;
+        }
+        .letter-footer span {
+            font-weight: bold;
+        }
+        .letter-footer .letter-id {
+            font-weight: normal;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        #generateLetterBtn {
+            display: none; /* Hidden initially */
+        }
+        .all {
+            display: none;
+            text-align: left; /* Align text to the left */
+        }
+        .letter {
+            text-align: left; /* Ensure letter content is left-aligned */
+        }
+    </style>
+</head>
+<body>
+    <div class="tools">
+        <h3>KNUST PRACTICUM</h3>
+        <div class="sections">
+            <p><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></p><br>
+            <p><a href="training.html"><i class="fa-solid fa-envelope"></i> Training Programs</a></p><br>
+            <p><a href="Opp.html"><i class="fa-solid fa-envelope"></i> Internship Opportunities</a></p><br>
+        </div>
+        <div class="sections" id="bottom">
+            <p><a href="#" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></p><br>
+        </div>
+    </div>
+    <div class="form">
+        <form id="submitLetterForm">
+            <label for="companyName">Company Name:</label>
+            <input type="text" placeholder="CompanyName" id="companyName" name="companyName" required><br><br>
+            <label for="poBox">Post Office Box:</label>
+            <input type="text" placeholder="Post Office Box 0000" id="poBox" name="poBox" required><br><br>
+            <label for="companyAddress">Company Address:</label>
+            <input type="text" placeholder="eg:Kumasi" id="companyAddress" name="companyAddress" required><br><br>
+        </form>
+    </div>
+    
+    <div class="button-container" id="generateBtnContainer">
+        <button id="generateLetterBtn">Generate Letter</button>
+    </div>
+
+    <div class="all">
+        <div class="container">
+            <div class="text">
+                <h3>LETTER</h3>
+            </div>
+            <div class="letter" id="letterOutput"></div>
+            <div class="button-container2">
+                <button id="deleteLetterBtn">Clear</button>
+                <button id="submitLetterBtn" type="submit" form="submitLetterForm">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to handle logout
+        function logout() {
+            Cookies.remove('token'); // Remove the token
+            Cookies.remove('data');  // Remove the data
+            window.location.href = 'signin.html'; // Redirect to login page
+        }
+
+        // Show the "Generate Letter" button only after all required fields are filled
+        const formFields = document.querySelectorAll('#submitLetterForm input[required]');
+        const generateBtnContainer = document.getElementById('generateBtnContainer');
+        const generateLetterBtn = document.getElementById('generateLetterBtn');
+
+        formFields.forEach(field => {
+            field.addEventListener('input', () => {
+                let allFilled = true;
+                formFields.forEach(input => {
+                    if (input.value === '') {
+                        allFilled = false;
+                    }
+                });
+                generateLetterBtn.style.display = allFilled ? 'inline-block' : 'none';
+            });
+        });
+
+        // Event listener for generating the letter
+        document.getElementById('generateLetterBtn').addEventListener('click', function() {
+            const cookieData = Cookies.get('data');
+            console.log('cookieData:', cookieData);
+
+            if (cookieData) {
+                try {
+                    const studentData = JSON.parse(cookieData);
+                    console.log('studentData:', studentData);
+                    const { name, programme, indexNumber, year, referenceNumber } = studentData;
+                    const companyName = document.getElementById('companyName').value;
+                    const poBox = document.getElementById('poBox').value;
+                    const companyAddress = document.getElementById('companyAddress').value;
+
+                    const letterTemplate = `
+                        <div style="font-family:Lucida;">
+                            <div style="border-bottom: 2px solid grey; display:flex;">
+                                <img src="../../Knust Practicum/KNUST logo.jpg" style="width: 60px; height: 90px; margin-right:10px">
+                                <div style="text-align:left; font-size:20px; margin-right:200px; margin-top:20px;">
+                                    <span style="font-weight:bold;">Kwame Nkrumah</span><br> University of Science<br>
+                                    and Technology, Kumasi
+                                </div>
+                                <div style="margin-top:70px; color:blue;">College of Science</div>
+                            </div>
+                            <p style="text-transform: uppercase;">DEPARTMENT OF ${programme}</p><br>
+                            <div>
+                                <p><span style="margin-right:300px">Our Ref:DCS.30/Vol.4</span>Date: ${new Date().toLocaleDateString()}</p>
+                            </div>
+                        </div>
+                        <br>
+                        <div style="text-align: left; font-weight:bold;">
+                            <p>The Human Resource Manager</p>
+                            <p>${companyName}</p>
+                            <p>${poBox}</p>
+                            <p>${companyAddress}</p>
+                        </div>
+                        <br>
+                        <p>Dear Sir/Madam,</p>
+                        <br>
+                        <p style="font-weight:bold; text-decoration: underline; text-align:center;">ATTACHMENT</p>
+                        <p>${name} with index number ${indexNumber} and reference number ${referenceNumber} is a level ${year} student of the Department of ${programme}, Kwame Nkrumah University of Science and Technology KNUST, Kumasi.</p>
+                        <p>As a part of our programme to train and equip our graduates for the industry, the students from this Department are to seek placements in appropriate establishments such as yours, to undertake a minimum of three weeks' hands-on job experience.</p>
+                        <p>${name} has expressed interest in undertaking a vacation internship at your end during the second semester holidays.</p>
+                        <p>It would be greatly appreciated if you could extend the necessary assistance for the period.</p>
+                        <p>Thank you</p>
+                    `;
+
+                    document.getElementById('letterOutput').innerHTML = letterTemplate + `
+                        <div class="letter-footer">
+                            <div>PMB UPO, KNUST, Kumasi, Ghana.</div>
+                            <div><span>Tel:</span> 03220603204</div>
+                            <div><span>Email:</span> compsci@knust.edu.gh</div>
+                            <div><span>Website:</span> www.knust.edu.gh</div>
+                        </div>
+                    `;
+                    document.querySelector('.all').style.display = 'flex';
+                } catch (error) {
+                    console.error('Error parsing JSON:', error);
+                    alert('Error retrieving data from cookies');
+                }
+            } else {
+                alert('No valid data found in cookies');
+            }
+        });
+
+        // Event listener for clearing the letter
+        document.getElementById('deleteLetterBtn').addEventListener('click', function() {
+            document.getElementById('letterOutput').innerHTML = '';
+        });
+
+        // Event listener for submitting the letter
+        document.getElementById('submitLetterForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const studentData = JSON.parse(Cookies.get('data'));
+            const companyName = document.getElementById('companyName').value;
+            const poBox = document.getElementById('poBox').value;
+            const companyAddress = document.getElementById('companyAddress').value;
+            
+            const referenceNumber = studentData.referenceNumber;
+            const studentId = studentData._id;
+            const name = studentData.name;
+            const programme = studentData.programme;
+            const year = studentData.year;
+            const indexNumber = studentData.indexNumber;
+
+            if (!referenceNumber || !name || !programme || !year || !indexNumber) {
+                alert('Missing student information.');
+                return;
+            }
+            
+            const letterData = {
+                companyName,
+                companyAddress,
+                poBox,
+                studentId,
+                createdAt: new Date().toISOString()
+            };          
+          
+            try {
+                const response = await fetch(`http://localhost:6001/letter/${studentId}/create-letter`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${Cookies.get('token')}` 
+                    },
+                    body: JSON.stringify(letterData)
+                });
+
+                if (response.ok) {
+                    window.location.href = 'success.html';
+                } else {
+                    const errorData = await response.json();
+                    alert(`Failed to submit letter: ${errorData.message}`);
+                }
+            } catch (error) {
+                console.error('Error submitting letter:', error);
+                alert('An error occurred while submitting the letter.');
+            }
+        });
+    </script>
+</body>
+</html>

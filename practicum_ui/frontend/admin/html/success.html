@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .success-container {
+            background-color: #fff;
+            padding: 40px 60px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .success-container h2 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .success-container p {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .success-container a {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .success-container a:hover {
+            text-decoration: underline;
+        }
+
+        .success-container p{
+            color: black;
+            font-size: 25px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <h2 id="successMessage">Admin added successfully</h2>
+        <p>Admin added successfully</p>
+        <p><a href="dashboard.html">Back to Dashboard</a></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const message = urlParams.get('message');
+            document.getElementById('successMessage').textContent = message;
+        });
+    </script>
+</body>
+</html>

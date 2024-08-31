@@ -1,0 +1,44 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.summary {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+button {
+    padding: 5px 10px;
+    margin: 2px;
+    cursor: pointer;
+}
+
+button.approve {
+    background-color: #4CAF50;
+    color: white;
+}
+
+button.pending {
+    background-color: #f44336;
+    color: white;
+}

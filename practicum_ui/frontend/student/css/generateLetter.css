@@ -1,0 +1,465 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    list-style: none;
+}
+
+body{
+    width:100vw;
+    overflow-x: hidden;
+}
+
+body a{
+    text-decoration: none;
+}
+
+.image-container{
+    position: relative;
+    display: inline-block;
+    
+}
+
+.text-overlay{
+    position: absolute;
+    top: 45%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0,0.2);
+    padding:13.2% 50%;
+}
+
+#text-overlay1{
+    position: absolute;
+    top:1%;
+    left:10%;
+    transform: translate(-50%, -50%);
+    padding:14% 50%;
+}
+
+.text-overlay2{
+    position: absolute;
+    top: 0.5%;
+    left:20%;
+    transform: translate(-50%, -50%);
+   
+}
+
+.text-overlay h2{
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color:rgba(245, 245, 245, 0.863);
+    margin-left:50px;
+    font-size:30px;
+    
+}
+
+#text-overlay3{
+    position: absolute;
+    top: 0.8%;
+    left:72%;
+    transform: translate(-50%, -50%);
+    /* padding:13.8% 50%; */
+}
+
+#text-overlay1{
+    margin-left: 50px;
+    margin-top:60px;
+}
+
+.text-overlay2{
+    margin-left: 550px;
+    margin-top:60px;
+}
+
+#text-overlay3{
+    margin-top:60px;
+    /* margin-right:200px; */
+}
+
+.navigations{
+    display:flex;
+
+}
+
+.navigations a{
+    color:rgba(245, 245, 245, 0.863);
+    padding-left:20px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.navigations a:hover{
+    color:orangered;
+    cursor:pointer;
+}
+
+.navigations #letter{
+    color:orangered;
+    cursor:pointer;
+}
+
+/* .image-container img{
+    width:500px;
+} */
+
+
+
+#first-pic{
+    height: 550px;
+    width:100vw;
+}
+
+
+
+.man img{
+    height:400px;
+    width:400px;
+    
+}
+
+.flex{
+    display:flex;
+    top:200%;
+}
+
+h3{
+    padding-top: 20px;
+    margin-left: 10px;
+    
+}
+
+.hambuger{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.top-nav{
+    width:100vw;
+    display:flex;
+    align-items: baseline;
+    justify-content: space-between;
+    position:fixed;
+    height: 50px;
+    background-color: white;
+    color: aqua;
+}
+
+.bars{
+
+    margin-right: 10px;
+    width: 40px;
+    margin-bottom:6px;
+    height: 3px;
+    background-color:whitesmoke;
+    /* background-color:rgba(245, 245, 245, 0.863); */
+}
+
+
+
+/* .change #bar1{
+    transform:rotate(-45deg) translate(-7px, 8px) ;
+}
+
+.change #bar2{
+    opacity:0;
+}
+
+
+.change #bar3{
+    transform:rotate(45deg) translate(-4px, -8px) ;
+} */
+
+/* .nav-bar ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: black;
+    height: 80px;
+    /* font-size: 10px; */
+*/
+
+
+.change{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-end;
+    cursor: pointer;
+    z-index: 9;
+}
+
+
+
+.text-overlay h1{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 50px;
+    color: whitesmoke;
+    text-transform:uppercase;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.text-overlay p{
+    font-size: 20px;
+    color: rgba(245, 245, 245, 0.863);
+    text-transform:capitalize;
+    text-align:center;
+}
+
+.opportunities h3{
+    margin-top:30px;
+    text-align:center;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: larger;
+    text-transform: capitalize;
+}
+
+.grid{
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    margin:50px 30px;
+    gap:50px;
+}
+
+.gl{
+    width:300px;
+    height:200px;
+    box-shadow: 0 10px 10px 10px rgba(185, 185, 187, 0.342);
+   
+}
+
+.grid p{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align:center;
+    color:orangered;
+}
+
+.dash{
+    margin-top:20px;
+    width:30px;
+    height:2px;
+    background-color:red;
+    margin-left:20px;
+}
+
+.gl h3{
+    text-align:left;
+    margin-left:20px;
+}
+
+.gl button{
+    cursor: pointer;
+    margin-top:20px;
+    width:80px;
+    height:40px;
+    color: #ffff;
+    background-color:orangered;
+    border: solid 1px orangered;
+    border-radius:5px;
+    margin-left:20px;
+}
+
+.gl button:hover{
+    background-color: rgba(255, 68, 0, 0.623);
+    border: solid 1px rgba(255, 68, 0, 0.623);
+}
+
+
+
+
+
+/* Add styles for the hamburger menu */
+.hamburger {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    position: relative; /* Ensure the dropdown is positioned relative to this */
+}
+
+.bars {
+    width:35px;
+    height: 3px;
+    background-color:whitesmoke;
+    margin: 3px 0;
+}
+
+/* Dropdown menu styles */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top:0px; /* Adjust as needed */
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    width:200px;
+    height:300px;
+    z-index: 1000; /* Ensure it appears above other content */
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Close button styles */
+.close-btn {
+    display: block;
+    text-align: right;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+@media screen and (max-width:600px) {
+    /* .text-overlay{
+        position: absolute;
+        top: 49%;
+        left:20%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0,0.2);
+        padding:6% 40%;
+    } */
+
+    .bars{
+        margin-right:40px;
+        width: 25px;
+        margin-bottom:3px;
+        height: 2px;
+        background-color:whitesmoke;
+    }
+
+    .text-overlay{
+        position: absolute;
+        top:287%;
+        left:46%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0,0.2);
+        padding:33% 20%;
+    }
+    
+    #text-overlay1{
+        position: absolute;
+        top:1%;
+        left:15%;
+        transform: translate(-50%, -50%);
+        padding:14% 50%;
+    }
+    
+    .text-overlay2 {
+        font-size:17px;
+    }
+    
+    .text-overlay h2{
+        font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        color:rgba(245, 245, 245, 0.863);
+        margin-left:50px;
+        font-size:30px;
+    }
+    
+    #text-overlay3{
+        position: absolute;
+        top: 0.8%;
+        left:75%;
+        transform: translate(-50%, -50%);
+        /* padding:13.8% 50%; */
+    }
+    
+    #text-overlay1{
+        margin-left: 0px;
+        margin-top:0px;
+    }
+    
+    .text-overlay2{
+        margin-left: 0px;
+        margin-top:0px;
+    }
+    
+    #text-overlay3{
+        margin-top:0px;
+        /* margin-right:200px; */
+    }
+    
+
+    .overlay{
+        top:97%;
+        position: absolute;
+        padding:10;
+    }
+    
+    .image-container{
+        width:100vw;
+        height:100px;
+    }
+
+    img{
+        width:100px;
+        height:100px;
+    }
+
+    .gl h3{
+        text-align:left;
+        font-size:17px;
+    }
+
+    .grid{
+        display:flex;
+        justify-content:center;
+        align-items: center;
+        margin:50px 30px;
+        gap:20px;
+    }
+
+    .gl button{
+        height:30px;
+        width:60px;
+    }
+    
+    .navigations a{
+        font-size:12px;
+        padding-left:12px;
+    }
+
+   
+    .layer h2{
+        font-size: 17px;
+    }
+}
+
+@media (pointer: coarse) {
+    body{
+        -ms-overflow-style: none;
+        scrollbar-width:none;
+    }
+    /* ::-webkit-scrollbar{
+        display: none;
+    }
+
+    .hot-cities{
+        width:100%;
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+    
+    .hot-cities a{
+        display: inline-block;
+        margin-right:10px;
+        
+    } */
+}

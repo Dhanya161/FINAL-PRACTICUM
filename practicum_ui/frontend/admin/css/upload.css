@@ -1,0 +1,150 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: white;
+}
+
+body a {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  text-decoration: none;
+}
+
+#bell {
+  color: black;
+}
+
+#dashboard {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.workarea {
+  background-color: white;
+  overflow-x: hidden;
+}
+
+nav a {
+  color: rgb(90, 89, 89);
+  border-bottom: 2px solid transparent;
+  padding: 5px;
+  cursor: pointer;
+}
+
+nav a.active {
+  color: black;
+  padding-bottom: 10px;
+  border-bottom: solid orangered 2px;
+}
+
+/* .workarea h3 a:hover{
+    color: rgb(90, 89, 89);
+    cursor: pointer;
+} */
+
+nav {
+  display: flex;
+  margin-left: 20px;
+  gap: 150px;
+}
+
+.hidden {
+  display: none;
+}
+
+.nav-bar {
+  background-color: white;
+}
+
+.nav-bar ul {
+  margin-top: 550px;
+  background-color: whitesmoke;
+  height: 555px;
+  padding: 150px 150px;
+}
+
+.nav-bar a {
+  display: flex;
+  border-radius: 50px;
+  color: black;
+  padding: 20px 0px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  padding-left: 250px;
+  overflow: hidden;
+  top: 0px;
+  left: 0px;
+  right: 0;
+  text-align: center;
+  transition: 0.2s;
+  text-decoration: none;
+  font-weight: bolder;
+}
+
+.nav-bar.active {
+  height: 450px;
+  opacity: 1;
+}
+
+div.showlinks {
+  left: 0;
+}
+
+.overall {
+  display: flex;
+}
+
+.tools h3 {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: solid whitesmoke 1px;
+}
+
+.sections {
+  width: 300px;
+  box-shadow: 5px 5px 5px 5px rgba(236, 236, 236, 0.589);
+}
+
+.sections a {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  margin-left: 50px;
+  margin-bottom: 10px;
+  color: black;
+}
+
+#bottom {
+  padding-bottom: 320px;
+  padding-top: 30px;
+}
+
+.sections a:hover {
+  color: rgba(104, 62, 62, 0.753);
+}
+
+.trainingPrograms {
+  margin: 20px 100px;
+  padding: 7px;
+  width: 800px;
+  height: 100vh;
+  background-color: white;
+  /* box-shadow: 5px 5px 5px rgba(255, 68, 0, 0.377); */
+  box-shadow: 5px 5px 5px 5px rgba(236, 236, 236, 0.589);
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 600px) {
+  .splash {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin-left: 25%;
+    margin-right: 50%;
+  }
+}

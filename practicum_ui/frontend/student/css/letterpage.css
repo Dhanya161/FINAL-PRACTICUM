@@ -1,0 +1,140 @@
+.all{
+   display:flex;
+   justify-content:center;
+}
+
+.letter{
+    margin-left:50px;
+    width: 600px;
+    height: 900px;
+    background-color: white; 
+    padding:10px;
+}
+
+.form {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin-top: -310px;
+}
+
+.form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+h3{
+    text-align:center;
+}
+
+.form{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:25px;
+    margin-left: 450px;
+}
+
+
+.container{
+    width: 700px;
+    height: 1000px;
+    background-color:rgba(128, 128, 128, 0.199);
+}
+
+button{
+        cursor: pointer;
+        margin-top:50px;
+        margin-bottom:20px;
+        width:80px;
+        height:40px;
+        color: #ffff;
+        background-color:orangered;
+        border: solid 1px orangered;
+        border-radius:5px;
+        /* margin-left:210px; */
+}
+
+button:hover{
+    background-color: rgba(255, 68, 0, 0.623);
+    border: solid 1px rgba(255, 68, 0, 0.623);
+}
+
+.button{
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+}
+
+.button-container2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:20px;
+   
+   
+}
+
+.tools {
+    
+    width: 20%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff; /* White */
+    padding: 20px;
+    color: orangered; /* Orangered text color */
+}
+
+.tools h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: black; /* Orangered text color */
+}
+
+
+
+.tools .sections p {
+    margin: 10px 0 10px 50px ;
+    
+}
+
+
+
+.tools .sections a {
+    color: orangered; /* Orangered text color */
+    text-decoration: none;
+    font-weight: bold;
+    
+}
+
+
+
+.tools .sections a:hover {
+    text-decoration: underline;
+}
+
+
+.all {
+    display: none; /* Initially hidden */
+    
+}
+
+
+

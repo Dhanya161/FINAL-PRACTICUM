@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approved Letters</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/approvedLetters.css">
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <div id="mainContent" class="overall">
+        <div class="tools">
+            <h3>KNUST PRACTICUM</h3>
+            <div class="sections">
+                <p><a href="index.html"> <i class="fa-solid fa-house"> </i>Home</a></p><br>
+                <p><a href="rejectedLetters.html"> <i class="fa-solid fa-envelope"> </i>Rejected Letters</a></p><br>
+                <p><a href="letterpage.html"> <i class="fa-solid fa-envelope"> </i>Generate Letter</a></p><br>
+            </div>
+            <div class="sections" id="bottom">
+                <p><a href=""><i class="fa-solid fa-gear"></i>Settings</a></p><br>
+                <p><a href="" id="logoutLink"><i class="fa-solid fa-right-from-bracket"></i>Log out</a></p><br>
+            </div>
+        </div>
+        <div class="workarea">
+            <div class="top-nav">
+                <div class="bar">
+                    <h3>Approved Letters</h3>
+                    <i class="fa-solid fa-bell" id="bell"></i>
+                </div>
+            </div>
+            <div id="approvedLettersContainer">
+                <!-- Approved letters will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const fetchApprovedLetters = async () => {
+                try {
+                    const studentId = JSON.parse(Cookies.get('data'))._id;
+                    console.log('Fetching letters for student ID:', studentId);
+
+                    const response = await fetch(`http://localhost:6001/letter/${studentId}/all`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    });
+
+                    if (response.ok) {
+                        const letters = await response.json();
+                        console.log('Fetched letters:', letters);
+                        displayApprovedLetters(letters);
+                    } else {
+                        alert('Failed to fetch approved letters.');
+                    }
+                } catch (error) {
+                    console.error('Error fetching approved letters:', error);
+                    alert('An error occurred while fetching the approved letters.');
+                }
+            };
+
+            const displayApprovedLetters = (letters) => {
+                const approvedLettersContainer = document.getElementById('approvedLettersContainer');
+                approvedLettersContainer.innerHTML = ''; // Clear previous content
+
+                if (letters.length === 0) {
+                    approvedLettersContainer.innerHTML = '<p>No approved letters available.</p>';
+                } else {
+                    letters.forEach(letter => {
+                        console.log('Displaying letter:', letter);
+
+                        const letterElement = document.createElement('div');
+                        letterElement.classList.add('letter-item');
+
+                        const studentElement = document.createElement('p');
+                        studentElement.classList.add('student-info');
+                        studentElement.innerHTML = `<strong>Student:</strong> ${letter.student.name}`;
+
+                        const dateElement = document.createElement('p');
+                        dateElement.classList.add('date-info');
+                        dateElement.innerHTML = `<strong>Date:</strong> ${new Date(letter.createdAt).toLocaleDateString()}`;
+
+                        const approvedLetterElement = document.createElement('div');
+                        approvedLetterElement.classList.add('letter-content');
+                        approvedLetterElement.innerHTML = letter.letterContent || 'No content available';
+
+                        const downloadButton = document.createElement('button');
+                        downloadButton.classList.add('download-btn');
+                        downloadButton.innerText = 'Download as PDF';
+                        downloadButton.onclick = () => downloadLetterAsPDF(letterElement, letter.student.name);
+
+                        letterElement.appendChild(studentElement);
+                        letterElement.appendChild(dateElement);
+                        letterElement.appendChild(approvedLetterElement);
+                        letterElement.appendChild(downloadButton);
+                        approvedLettersContainer.appendChild(letterElement);
+                    });
+                }
+            };
+
+            const downloadLetterAsPDF = (element, studentName) => {
+                // Hide elements before generating the PDF
+                const studentInfo = element.querySelector('.student-info');
+                const dateInfo = element.querySelector('.date-info');
+                const downloadBtn = element.querySelector('.download-btn');
+
+                if (studentInfo) studentInfo.style.display = 'none';
+                if (dateInfo) dateInfo.style.display = 'none';
+                if (downloadBtn) downloadBtn.style.display = 'none';
+
+                const options = {
+                    margin: [0.5, 0.5, 0.5, 0.5], // Adjust margins to fit content better on A4
+                    filename: `Approved_Letter_${studentName}.pdf`,
+                    image: { type: 'jpeg', quality: 1 }, // Improved image quality
+                    html2canvas: { 
+                        scale: 5, // Increase the scale for higher resolution
+                        useCORS: true, // Allow cross-origin images to be rendered correctly
+                        dpi: 300, // Increase DPI for better text rendering
+                        letterRendering: true, // Improved letter rendering for better text quality
+                     },
+                    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+                    html2canvas: {
+                        onclone: (document) => {
+                            // Inject custom styles for PDF
+                            const style = document.createElement('style');
+                            style.textContent = `
+                                .letter-item {
+                                    padding: 20px;
+                                    margin-bottom: 20px;
+                                    font-family: Lucida, sans-serif;
+                                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                                    border-radius: 5px;
+                                }
+                                .letter-item .letter-content {
+                                    padding-top: 100px;
+                                    font-size: 0.8em;
+                                }
+                                .letter-item .letter-footer {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    font-size: 0.8em;
+                                    border-top: solid 1px rgb(58, 57, 57); /* Border only for footer */
+                                    margin-top: 280px;
+                                    padding-top: 10px;
+                                }
+                                .letter-item .letter-footer span {
+                                    font-weight: normal;
+                                }
+                            `;
+                            document.head.appendChild(style);
+                        }
+                    }
+                };
+
+                html2pdf().from(element).set(options).save().finally(() => {
+                    // Restore the visibility of hidden elements
+                    if (studentInfo) studentInfo.style.display = '';
+                    if (dateInfo) dateInfo.style.display = '';
+                    if (downloadBtn) downloadBtn.style.display = '';
+                });
+            };
+
+            fetchApprovedLetters();
+        });
+
+        // Logout functionality
+        document.getElementById('logoutLink').addEventListener('click', function() {
+            // Clear cookies or local storage if used for authentication
+            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+            // Redirect to login page
+            window.location.href = 'signin.html';
+        });
+    </script>
+</body>
+</html>

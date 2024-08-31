@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="../css/upload.css">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/668d0bdd5f.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-color: #f4f4f4;
+        }
+
+        .overall {
+            display: flex;
+            width: 100%;
+        }
+
+        .tools {
+            background-color: white;
+            color: black;
+            width: 250px;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sections{
+            width: 230px;   
+            height:300px;
+        }
+
+        .tools h3 {
+            margin-top: 0;
+        }
+
+        .sections a {
+            color: black;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+            margin-bottom: 20px;
+        }
+
+        .sections a:hover {
+            text-decoration: underline;
+        }
+
+        .bottom p {
+            margin: 10px 0;
+        }
+
+        .content {
+            padding: 20px;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1, h2 {
+            color: #34495e;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #34495e;
+        }
+
+        select, input[type="file"], textarea {
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 5px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .flyer-preview {
+            margin-top: 20px;
+            max-width: 100%;
+            display: block;
+        }
+
+        .remove-btn {
+            display: none;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .remove-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .existing-flyers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .flyer-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .flyer-item img {
+            max-width: 250px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .flyer-item p {
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .flyer-item button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .flyer-item button:hover {
+            background-color: #c0392b;
+        }
+        .tools h4 {
+            font-weight: bold;
+            color: rgb(255, 13, 0);
+        }
+    </style>
+</head>
+<body>
+    <div id="mainContent" class="overall">
+        <div class="tools">
+            <h3>KNUST PRACTICUM</h3>
+            <h4>ADMIN</h4>
+            <div class="sections">
+                <p><a href="dashboard.html"><i class="fa-solid fa-house"></i>  Dashboard</a></p>
+                <p><a href="pending.html"><i class="fa-solid fa-envelope-open-text"></i> Pending Letters</a></p>
+                <p><a href="approvedLetters.html"><i class="fa-solid fa-envelope-open"></i> Approved Letters</a></p>
+                <p><a href="allLetters.html"> <i class="fa-solid fa-envelope"></i> All Letters</a></p>
+                <p><a href="Rejected.html"><i class="fa-solid fa-envelope"></i>Rejected Letters</a></p>
+                <p><a href="upload.html"> <i class="fa-solid fa-upload"></i></i> Upload Opportunities</a></p><br>
+                <p><a href="AddAdmin.html"> <i class="fas fa-user-plus"></i> Manage admins</a></p><br>
+                <p><a href="#" id="logoutLink"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <h1>Upload Flyer and Information</h1>
+            <form id="uploadForm">
+                <label for="studentPage">Select Page:</label>
+                <select id="studentPage">
+                    <option value="training">Training Page</option>
+                    <option value="internships">Internship Page</option>
+                </select><br>
+                <label for="flyer">Flyer:</label>
+                <input type="file" id="flyer" accept="image/*" multiple><br>
+                <div id="flyerPreviewContainer"></div>
+                <button type="button" id="removeFlyer" class="remove-btn">Remove All</button><br>
+                <label for="info">Additional Information:</label><br>
+                <textarea id="info" rows="4" cols="50"></textarea><br>
+                <button type="submit">Upload</button>
+            </form>
+    
+            <h2>Existing Flyers</h2>
+            <div class="existing-flyers" id="existingFlyersContainer"></div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/compressorjs@1.0.6/dist/compressor.min.js"></script>
+        <script>
+            document.getElementById('flyer').addEventListener('change', function (e) {
+                const files = e.target.files;
+                const previewContainer = document.getElementById('flyerPreviewContainer');
+                const removeBtn = document.getElementById('removeFlyer');
+                previewContainer.innerHTML = '';
+    
+                Array.from(files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onloadend = function () {
+                        const img = document.createElement('img');
+                        img.src = reader.result;
+                        img.classList.add('flyer-preview');
+                        previewContainer.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                });
+    
+                if (files.length > 0) {
+                    removeBtn.style.display = 'inline-block';
+                } else {
+                    removeBtn.style.display = 'none';
+                }
+            });
+    
+            document.getElementById('removeFlyer').addEventListener('click', function () {
+                const flyerInput = document.getElementById('flyer');
+                const previewContainer = document.getElementById('flyerPreviewContainer');
+                const removeBtn = document.getElementById('removeFlyer');
+    
+                flyerInput.value = '';
+                previewContainer.innerHTML = '';
+                removeBtn.style.display = 'none';
+            });
+    
+            document.getElementById('uploadForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+    
+                const flyerInput = document.getElementById('flyer');
+                const infoInput = document.getElementById('info');
+                const studentPage = document.getElementById('studentPage').value;
+    
+                if (flyerInput.files.length === 0) {
+                    alert('Please select flyers to upload.');
+                    return;
+                }
+    
+                const compressFlyers = Array.from(flyerInput.files).map(file => {
+                    return new Promise((resolve, reject) => {
+                        new Compressor(file, {
+                            quality: 0.6,
+                            success(result) {
+                                const reader = new FileReader();
+                                reader.onloadend = function () {
+                                    resolve(reader.result);
+                                };
+                                reader.readAsDataURL(result);
+                            },
+                            error(err) {
+                                reject(err);
+                            },
+                        });
+                    });
+                });
+    
+                Promise.all(compressFlyers).then(results => {
+                    let existingData = localStorage.getItem(`flyers_${studentPage}`);
+                    let existingFlyers = existingData ? JSON.parse(existingData).flyers : [];
+                    let existingInfo = existingData ? JSON.parse(existingData).info : [];
+    
+                    if (!Array.isArray(existingInfo)) {
+                        existingInfo = [];
+                    }
+    
+                    results.forEach(flyer => {
+                        existingFlyers.push(flyer);
+                        existingInfo.push(infoInput.value);
+                    });
+    
+                    const flyerData = { flyers: existingFlyers, info: existingInfo };
+                    localStorage.setItem(`flyers_${studentPage}`, JSON.stringify(flyerData));
+                    alert('Upload successful');
+                    flyerInput.value = '';
+                    infoInput.value = '';
+                    document.getElementById('flyerPreviewContainer').innerHTML = '';
+                    document.getElementById('removeFlyer').style.display = 'none';
+                    loadExistingFlyers();
+                });
+            });
+    
+            function loadExistingFlyers() {
+                const studentPage = document.getElementById('studentPage').value;
+                const data = localStorage.getItem(`flyers_${studentPage}`);
+                const existingFlyersContainer = document.getElementById('existingFlyersContainer');
+                existingFlyersContainer.innerHTML = '';
+    
+                if (data) {
+                    const existingFlyers = JSON.parse(data).flyers || [];
+                    const existingInfo = JSON.parse(data).info || [];
+    
+                    existingFlyers.forEach((flyerUrl, index) => {
+                        const div = document.createElement('div');
+                        div.classList.add('flyer-item');
+                        div.innerHTML = `
+                            <img src="${flyerUrl}" alt="Flyer">
+                            <p>${existingInfo[index] || 'No information available'}</p>
+                            <button onclick="deleteFlyer(${index})">Delete</button>
+                        `;
+                        existingFlyersContainer.appendChild(div);
+                    });
+                }
+            }
+    
+            function deleteFlyer(index) {
+                const studentPage = document.getElementById('studentPage').value;
+                let data = localStorage.getItem(`flyers_${studentPage}`);
+                if (data) {
+                    let flyerData = JSON.parse(data);
+                    flyerData.flyers.splice(index, 1);
+                    flyerData.info.splice(index, 1);
+                    localStorage.setItem(`flyers_${studentPage}`, JSON.stringify(flyerData));
+                    loadExistingFlyers();
+                }
+            }
+    
+            document.getElementById('studentPage').addEventListener('change', loadExistingFlyers);
+    
+            document.addEventListener('DOMContentLoaded', loadExistingFlyers);
+
+
+
+            // Logout functionality
+            document.getElementById('logoutLink').addEventListener('click', function() {
+                // Clear cookies or local storage if used for authentication
+                document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+                // Redirect to login page
+                window.location.href = 'signin.html';
+            });
+        </script>
+    </body>
+</html>

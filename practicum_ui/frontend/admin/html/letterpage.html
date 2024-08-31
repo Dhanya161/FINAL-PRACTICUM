@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter Page</title>
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/letterpage.css">
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
+    <style>
+        .editable {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+        .form-section label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-section input, .form-section textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .edit-mode {
+            border: 2px solid #007bff;
+            padding: 10px;
+        }
+        .edit-buttons {
+            margin-bottom: 20px;
+        }
+        .edit-buttons button {
+            margin-right: 10px;
+        }
+        .letter-footer {
+            border-top: 2px solid black;
+            font-size: 0.8em;
+            display: flex;
+            justify-content: space-between;
+            padding-top: 10px;
+            margin-top: 20px;
+        }
+        .letter-footer span {
+            font-weight: bold;
+        }
+        .letter-footer .letter-id {
+            font-weight: normal;
+        }
+        .reject-reason-container {
+            display: none;
+            margin-top: 20px;
+        }
+        .reject-reason-container textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .reject-reason-container button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="mainContent" class="overall">
+        <div class="tools">
+            <h3>KNUST PRACTICUM</h3>
+            <div class="sections">
+                <p><a href="dashboard.html"> <i class="fa-solid fa-house"></i> Dashboard</a></p><br>
+                <p><a href="approvedLetters.html"> <i class="fa-solid fa-envelope-open"></i> Approved letters</a></p><br>
+                <p><a href="Rejected.html"> <i class="fa-solid fa-envelope"></i> Rejected Letters</a></p><br>
+                <p><a href="allLetters.html"> <i class="fa-solid fa-envelope"></i> All Letters</a></p><br>
+                <p><a href="upload.html"> <i class="fa-solid fa-upload"></i> Upload Opportunities</a></p><br>
+            </div>
+            <div class="sections" id="bottom">
+                <p><a href=""><i class="fa-solid fa-gear"></i> Settings</a></p><br>
+                <p><a href=""><i class="fa-solid fa-right-from-bracket"></i> Log out</a></p><br>
+            </div>
+        </div>
+        <div class="workarea">
+            <div class="top-bar">
+                <div>
+                    <p><span id="pages">Pages/</span> Letter</p>
+                    <h4>Letter</h4>
+                </div>
+                <div>
+                    <p id="loggedInUser"></p>
+                    <i class="fa-solid fa-gear"></i>
+                    <i class="fa-solid fa-bell" id="bell"></i>
+                </div>
+            </div>
+            <div class="all">
+                <div class="container">
+                    <div class="text">
+                        <h3>LETTER DETAILS</h3>
+                    </div>
+                    <div class="letter editable" id="letterContent" contenteditable="false">
+                        <!-- Letter content will be populated here and editable -->
+                    </div>
+                    <div class="edit-buttons" style="display: flex; align-items: center; justify-content: center; margin-top: -20px;">
+                        <button id="editButton" style="background-color: #007bff; color: white; border: 1px solid #007bff;">Edit</button>
+                        <button id="saveChangesButton" style="background-color: #28a745; color: white; display: none;">Save Changes</button>
+                    </div>
+                    <div class="actions">
+                        <button id="approveButton">Approve</button>
+                        <button id="rejectButton">Reject</button>
+                    </div>
+                    <div class="reject-reason-container" id="rejectReasonContainer">
+                        <h4>Reason for Rejection</h4>
+                        <textarea id="rejectReason" rows="4" placeholder="Enter reason for rejection..."></textarea>
+                        <button id="confirmRejectButton">Confirm Reject</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const letterId = urlParams.get('letterId');
+
+    let dynamicLetterId = `LETTER-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+    localStorage.setItem('dynamicLetterId', dynamicLetterId); //
+
+    try {
+        const response = await fetch(`http://localhost:6001/letter/${letterId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Cookies.get('token')}`
+            }
+        });
+
+        if (response.ok) {
+            const letter = await response.json();
+            
+            let letterContent = `
+                <div class="letter-header" style="font-family:Lucida;">
+                    <div class="header-left" style="border-bottom: 2px solid grey; display:flex; ">
+                        <img src="../../Knust Practicum/KNUST logo.jpg" style="width: 60px; height: 90px; margin-right:10px">
+                        <div style="text-align:left; font-size:20px; margin-right:150px; padding-top:60px;"><span style="font-weight:bold; ">Kwame Nkrumah</span><br> University of Science<br>
+                        and Technology, Kumasi </div> 
+                        <div style="padding-top:110px; color:blue;">College of Science</div>
+                    </div>
+                    <p style="text-transform: uppercase;">DEPARTMENT OF ${letter.student.programme}</p>
+                    <div class="header-right">
+                        <p style="font-weight: bold;  margin-right:300px">Our Ref: DCS.30/Vol.4</p>
+                        <p>Date: ${new Date(letter.createdAt).toLocaleDateString()}</p>
+                    </div>
+                </div>
+                <br>
+                <div style="text-align: left; font-weight:bold;" >
+                    <p>The Human Resource Manager</p>
+                    <p>${letter.companyName}</p>
+                    <p>${letter.poBox}</p>
+                    <p>${letter.companyAddress}</p>
+                </div>
+                <br>
+                <div class="letter-body">
+                    <p>Dear Sir/Madam,</p>
+                    <br>
+                    <p>${letter.student.name} with index number ${letter.student.indexNumber} and reference number ${letter.student.referenceNumber} is a level ${letter.student.year} student of the Department of ${letter.student.programme}, Kwame Nkrumah University of Science and Technology KNUST, Kumasi.</p>
+                    <p>As a part of our programme to train and equip our graduates for the industry, the students from
+                    this Department are to seek placements in appropriate establishments such as yours, to undertake a minimum
+                    of three weeks' hands-on job experience.    
+                    </p>
+                    <p>${letter.student.name} has expressed interest in undertaking a vacation internship at your end during the second semester holidays.</p>
+                    <p>It would be greatly appreciated if you could extend to him/her the necessary assistance for the internship period.</p>
+                    <p>Thank you.</p>
+                    <p class="signature">.....................</p>
+                    <p>HEAD OF DEPARTMENT</p>
+                </div>
+            `;
+
+            document.getElementById('letterContent').innerHTML = letterContent;
+            
+            document.getElementById('editButton').addEventListener('click', () => {
+                toggleEditMode(true);
+            });
+            
+            document.getElementById('saveChangesButton').addEventListener('click', () => {
+                saveChanges(letterId);
+            });
+            
+            document.getElementById('approveButton').addEventListener('click', () => {
+                approveLetter(letterId, dynamicLetterId); // Pass dynamic ID
+            });
+            
+            document.getElementById('rejectButton').addEventListener('click', () => {
+                document.getElementById('rejectReasonContainer').style.display = 'block';
+            });
+            
+            document.getElementById('confirmRejectButton').addEventListener('click', () => {
+                const rejectReason = document.getElementById('rejectReason').value;
+                if (rejectReason.trim()) {
+                    rejectLetter(letterId, rejectReason);
+                } else {
+                    alert('Please provide a reason for rejection.');
+                }
+            });
+        } else {
+            alert('Failed to fetch letter details.');
+        }
+    } catch (error) {
+        console.error('Error fetching letter:', error);
+        alert('An error occurred while fetching the letter.');
+    }
+});
+
+function toggleEditMode(isEditing) {
+    const letterContent = document.getElementById('letterContent');
+    letterContent.contentEditable = isEditing;
+    document.getElementById('editButton').style.display = isEditing ? 'none' : 'inline-block';
+    document.getElementById('saveChangesButton').style.display = isEditing ? 'inline-block' : 'none';
+    letterContent.classList.toggle('edit-mode', isEditing);
+}
+
+async function saveChanges(letterId) {
+    const letterContentElement = document.getElementById('letterContent');
+    const letterContentString = letterContentElement.innerHTML; // Convert the content to a string
+
+    try {
+        const response = await fetch(`http://localhost:6001/letter/updateLetter/${letterId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Cookies.get('token')}`
+            },
+            body: JSON.stringify({ letterContent: letterContentString })
+        });
+
+        if (response.ok) {
+            alert('Changes saved successfully.');
+        } else {
+            alert('Failed to save changes.');
+        }
+    } catch (error) {
+        console.error('Error saving letter changes:', error);
+    }
+}
+
+async function approveLetter(letterId, dynamicLetterId) {
+    const letterContentElement = document.getElementById('letterContent');
+    const signature = `
+        <img src="signature.png" alt="Signature" style="width: 150px; height: 50px;">
+    `;
+
+    const signatureElement = letterContentElement.querySelector('.signature');
+    signatureElement.innerHTML = signature;
+
+    // Add letter ID footer with dynamic ID
+    const footer = `
+        <div class="letter-footer">
+            <div>PMB UPO, KNUST, Kumasi, Ghana.</div>
+            <div><span>Tel:</span> 03220603204</div>
+            <div><span>Email:</span> compsci@knust.edu.gh</div>
+            <div><span>Website:</span> www.knust.edu.gh</div>
+            <div class="letter-id"><span>Letter ID</span>: ${dynamicLetterId}</div>
+        </div>
+    `;
+    letterContentElement.innerHTML += footer;
+
+    const letterContentString = letterContentElement.innerHTML; // Convert the content to a string
+
+    // Call backend to approve the letter
+    try {
+        const response = await fetch(`http://localhost:6001/letter/approve/${letterId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Cookies.get('token')}`
+            },
+            body: JSON.stringify({ letterContent: letterContentString })
+        });
+
+        if (response.ok) {
+            window.location.href = 'ApprovalSuccess.html';
+        } else {
+            alert('Failed to approve letter.');
+        }
+    } catch (error) {
+        console.error('Error approving letter:', error);
+    }
+}
+
+async function rejectLetter(letterId, reason) {
+    try {
+        const response = await fetch(`http://localhost:6001/letter/reject/${letterId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Cookies.get('token')}`
+            },
+            body: JSON.stringify({ reason })
+        });
+
+        if (response.ok) {
+            alert('Letter rejected successfully.');
+            window.location.href = 'RLSuccess.html'; 
+        } else {
+            alert('Failed to reject letter.');
+        }
+    } catch (error) {
+        console.error('Error rejecting letter:', error);
+        alert('An error occurred while rejecting the letter.');
+    }
+}
+
+    </script>
+</body>
+</html>

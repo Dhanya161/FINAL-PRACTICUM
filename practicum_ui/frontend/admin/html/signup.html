@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>practicum_signup</title>
+    <link rel="stylesheet" href="/frontend/student/css/signup.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="all">
+        <div class="container">
+            <div class="picture">
+                <img src="../../Knust Practicum/landing2.jpg" alt="KNUST Landing">
+                <div class="text-overlay">
+                    <h2>KNUST PRACTICUM</h2>
+                    <h1>Connecting Talents to Opportunities</h1>
+                    <p>discover endless opportunities with ease</p>
+                </div>
+            </div>
+
+            <div class="form">
+                <h3>Create your account with us below</h3>
+                <br>
+                <p>Already have an account?<a href="login.html">Login</a></p>
+                <br>
+                <form id="signupForm" onsubmit="return validateForm()">
+                    <label for="email">Email</label><br>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <br>
+                    <label for="password">Create Password</label><br>
+                    <div class="password-container">
+                        <input type="password" id="password" placeholder="Create your password" required>
+                        <span class="eye-icon" onclick="togglePasswordVisibility('password')"><i class="fas fa-eye"></i></span>
+                    </div>
+                    <br>
+                    <label for="confirmPassword">Confirm Password</label><br>
+                    <div class="password-container">
+                        <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                        <span class="eye-icon" onclick="togglePasswordVisibility('confirmPassword')"><i class="fas fa-eye"></i></span>
+                    </div>
+                    <br>
+                    <button type="submit" onclick="register(event)">Create account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        function validateForm() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Validate email format
+    if (!emailPattern.test(email)) {
+        alert('Please enter a valid email address.');
+        return false; // Prevent form submission
+    }
+
+    // Check if passwords match
+    if (password !== confirmPassword) {
+        alert('Passwords do not match.');
+        return false; // Prevent form submission
+    }
+
+    // Optionally, validate other fields or perform additional checks
+
+    return true; // Allow form submission
+}
+
+function togglePasswordVisibility(fieldId) {
+    const passwordField = document.getElementById(fieldId);
+    const eyeIcon = passwordField.nextElementSibling.querySelector('i');
+    
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash'); // Change to crossed eye icon
+    } else {
+        passwordField.type = 'password';
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye'); // Change to open eye icon
+    }
+}
+
+    </script>
+    <script src="/frontend/admin/javascript.js"></script>
+</body>
+</html>

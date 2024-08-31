@@ -1,0 +1,47 @@
+/* success.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fff5e6; /* Light orange background for a warm feel */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.success-message {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    text-align: center;
+    max-width: 500px;
+    margin: 20px;
+}
+
+.success-message img.congrats-image {
+    width: 100px; /* Adjust size as needed */
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.success-message h2 {
+    color: #FF8C00; /* Dark orange color for success */
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.success-message p {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.success-message a {
+    color: #FF8C00;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.success-message a:hover {
+    text-decoration: underline;
+}

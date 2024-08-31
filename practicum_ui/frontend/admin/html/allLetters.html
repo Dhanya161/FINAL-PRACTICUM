@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard/KNUST Practicum</title>
+    <link rel="stylesheet" href="../../student/css/styles.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/668d0bdd5f.js" crossorigin="anonymous"></script>
+    <style>
+        .hidden { display: none; }
+        #letterOutput { margin: 150px; border: 1px solid #000; padding: 100px; }
+        .button-container { margin-top: 20px; }
+        .button { padding: 10px 50px; margin-right: 0px; text-align: center; }
+        .approve-btn { background-color: #4CAF50; color: white; }
+        .reject-btn { background-color: #f44336; color: white; }
+    </style>
+</head>
+<body>
+    <div id="mainContent" class="overall">
+        <div class="tools">
+            <h3>KNUST PRACTICUM</h3>
+            <div class="sections">
+                <p><a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a></p><br>
+                <p><a href="pending.html"><i class="fa-solid fa-envelope-open-text"></i> Pending Letters</a></p><br>
+                <p><a href="approvedLetters.html"><i class="fa-solid fa-envelope-open"></i> Approved Letters</a></p><br>
+                <p><a href="Rejected.html"> <i class="fa-solid fa-envelope"></i> Rejected Letters</a></p><br>
+                <p><a href="allLetters.html"> <i class="fa-solid fa-envelope"></i> All Letters</a></p><br>
+                <p><a href="upload.html"> <i class="fa-solid fa-upload"></i> Upload Opportunities</a></p><br>
+                <p><a href="AddAdmin.html"> <i class="fas fa-user-plus"></i> Manage admins</a></p>
+            </div>
+            <div class="sections" id="bottom">
+                <p><a href="#" id="logoutLink"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></p><br>
+            </div>
+        </div>
+        <div class="workarea">
+            <h2 id="dashboard">Manage</h2>
+            <section id="section1">
+                <div class="table">
+                    <div class="columns">
+                        <div class="column1">
+                            <h4>Student</h4>
+                        </div>
+                        <div class="column2">
+                            <h4>Date</h4>
+                        </div>
+                        <div class="column3">
+                            <h4>Status</h4>
+                        </div>
+                        <div class="column4">
+                            <h4>Action</h4>
+                        </div>
+                    </div>
+                    <div id="letterContainer">
+                        <!-- Dynamic content will be inserted here -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const fetchLetters = async () => {
+                try {
+                    const response = await fetch('http://localhost:6001/letter/all', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${'token'}` // replace 'token' with actual token
+                        }
+                    });
+    
+                    if (response.ok) {
+                        const letters = await response.json();
+                        displayLetters(letters);
+                    } else {
+                        alert('Failed to fetch letters summary.');
+                    }
+                } catch (error) {
+                    console.error('Error fetching letters summary:', error);
+                    alert('An error occurred while fetching the letters summary.');
+                }
+            };
+    
+            const displayLetters = (letters) => {
+                const letterContainer = document.getElementById('letterContainer');
+                letterContainer.innerHTML = ''; // Clear previous content
+    
+                letters.forEach(letter => {
+                    const letterElement = document.createElement('div');
+                    letterElement.classList.add('columns');
+    
+                    const studentElement = document.createElement('div');
+                    studentElement.classList.add('column1');
+                    studentElement.innerHTML = `<p>${letter.student.name}</p>`; 
+    
+                    const dateElement = document.createElement('div');
+                    dateElement.classList.add('column2');
+                    dateElement.innerHTML = `<p>${new Date(letter.createdAt).toLocaleDateString()}</p>`;
+    
+                    const statusElement = document.createElement('div');
+                    statusElement.classList.add('column3');
+                    statusElement.innerHTML = `<p>${letter.status}</p>`;
+    
+                    // Create action element with different content based on letter status
+                    const actionElement = document.createElement('div');
+                    actionElement.classList.add('column4');
+    
+                    if (letter.status === 'Rejected') {
+                        actionElement.innerHTML = `
+                            <button onclick="viewLetter('${letter._id}', '${letter.status}')">View</button>
+                            <p>Rejection Reason: ${letter.rejectReason || 'No reason provided.'}</p>
+                        `;
+                    } else {
+                        actionElement.innerHTML = `<button onclick="viewLetter('${letter._id}', '${letter.status}')">View</button>`;
+                    }
+    
+                    letterElement.appendChild(studentElement);
+                    letterElement.appendChild(dateElement);
+                    letterElement.appendChild(statusElement);
+                    letterElement.appendChild(actionElement);
+    
+                    letterContainer.appendChild(letterElement);
+                });
+            };
+    
+            fetchLetters();
+        });
+    
+        async function viewLetter(letterId, status) {
+        if (status === 'rejected') {
+            try {
+                // Fetch the letter details to get the rejection reason
+                const response = await fetch(`http://localhost:6001/letter/${letterId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${'token'}` // replace 'token' with actual token
+                    }
+                });
+
+                if (response.ok) {
+                    const letter = await response.json();
+                    const rejectionReason = letter.rejectReason || 'No reason provided.';
+                    
+                    // Redirect to rejectedLetterPage.html with letterId and rejectionReason
+                    window.location.href = `rejectedLetterPage.html?letterId=${letterId}&reason=${encodeURIComponent(rejectionReason)}`;
+                } else {
+                    console.error('Failed to fetch letter details.');
+                    alert('Failed to fetch letter details.');
+                }
+            } catch (error) {
+                console.error('Error fetching letter details:', error);
+                alert('An error occurred while fetching the letter details.');
+            }
+        } else if (status === 'pending') {
+            window.location.href = `letterpage.html?letterId=${letterId}`; // Redirect to letterpage for pending letters
+        } else {
+            window.location.href = `viewApprovedLetter.html?letterId=${letterId}`; // Redirect to view approved letter page
+        }
+    }
+    
+        // Logout functionality
+        document.getElementById('logoutLink').addEventListener('click', function() {
+            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+            window.location.href = 'signin.html';
+        });
+    </script>
+    
+</body>
+</html>

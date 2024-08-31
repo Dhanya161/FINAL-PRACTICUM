@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>practicum_signin</title>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <link rel="stylesheet" href="../css/signin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="all">
+        <div class="container">
+            <div class="form">
+                <h1>Welcome back!</h1>
+                <p>Login to access all your data</p>
+                <br>
+                <br>
+                <form id="signinForm" onsubmit="return validateForm()">
+                    <label for="email">Email</label><br>
+                    <input type="email" id="email" placeholder="Enter your email address" required>
+                    <br>
+                    <label for="password">Password</label><br>
+                    <div class="password-container">
+                        <input type="password" id="password" placeholder="Enter your password" required>
+                        <span class="eye-icon" onclick="togglePasswordVisibility()"><i class="fas fa-eye"></i></span>
+                    </div>
+                    <br>
+                    <button type='submit' onclick="login(event)">Log in</button>
+                </form>
+                <br>
+                <br>
+                <p id="noAccount">Don't have an account?<a href="signup.html">Register</a></p>
+            </div>
+
+            <div class="picture">
+                <img src="../../Knust Practicum/KNUST entrance2.jpg" alt="KNUST Entrance">
+                <div class="text-overlay">
+                    <!-- Overlay content can be added here if needed -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function validateForm() {
+    const email = document.getElementById('email').value;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailPattern.test(email)) {
+        alert('Please enter a valid email address.');
+        return false; // Prevent form submission
+    }
+
+    
+
+    return true; // Allow form submission
+}
+
+function togglePasswordVisibility() {
+    const passwordField = document.getElementById('password');
+    const eyeIcon = document.querySelector('.eye-icon i');
+    
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash'); // Change to crossed eye icon
+    } else {
+        passwordField.type = 'password';
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye'); // Change to open eye icon
+    }
+}
+
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

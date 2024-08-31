@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        practicum_generate-letter
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/generateLetter.css">
+    
+</head>
+<body>
+    <div class="top-nav">
+        
+        
+    </div>
+    <div class="image-container">
+        <img src="../../Knust Practicum/gl.png" id="first-pic">
+        <div class="text-overlay">
+            <div class="layer">
+                <div class="nav">
+                    <div class="change" id="text-overlay1">
+                        <div  class="hamburger">
+                            <div class="bars" id="bar1"></div>
+                            <div class="bars" id="bar2"></div> 
+                            <div class="bars" id="bar2"></div> 
+                        </div>
+
+                        
+
+                        
+                    </div>
+                        <h2 class="text-overlay2">KNUST PRACTICUM</h2>
+                    </div>
+                </div>
+
+                <div class="navigations" id="text-overlay3">
+            
+                        <a href="index.html" id="home">HOME</a>
+                        <a id="letter">LETTER</a>
+                        <a href="training.html" id="training">TRAINING</a>
+                        <a href="Opp.html" id="internships">INTERNSHIPS</a>
+                    
+                </div>
+                <div class="flex">
+                    <!-- <div class="man">
+                        <img src="../../Knust Practicum/glMan.png">
+                    </div> -->
+                    
+                    <div>
+                        <h1>generate internship letters</h1>
+                        <p>generate an internship letter
+                            <br>
+                            easy and fast process
+                        </p>
+                    </div> 
+                </div>
+        </div>
+    </div>
+    
+   <div class="opportunities">
+        
+            <div class="grid">
+                <div class="gl">
+                    <h3>Generate letter</h3>
+                    <div class="dash"></div>
+                    <a href="letterpage.html"><button>Go</button></a>
+                </div>
+
+                <div class="gl">
+                    <h3>Approved letters</h3>
+                    <div class="dash"></div>
+                    <a href="approvedLetters.html"><button>Go</button></a>
+                </div>
+
+                <div class="gl">
+                    <h3>Rejected letters</h3>
+                    <div class="dash"></div>
+                    <a href="rejectedLetters.html"><button>Go</button></a>
+                </div>
+                
+            </div>
+
+            
+   
+   
+   
+
+
+    
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.querySelector('.hamburger');
+            const dropdownMenu = document.createElement('div');
+            dropdownMenu.className = 'dropdown-menu';
+
+            // Create and append close button
+            const closeBtn = document.createElement('span');
+            closeBtn.className = 'close-btn';
+            closeBtn.innerHTML = '&#10006;';
+            dropdownMenu.appendChild(closeBtn);
+
+            // Create and append dropdown links
+            const logoutLink = document.createElement('a');
+            logoutLink.href = '#';
+            logoutLink.textContent = 'Logout';
+            logoutLink.setAttribute('onclick', 'logout()');
+            dropdownMenu.appendChild(logoutLink);
+
+            const aboutLink = document.createElement('a');
+            aboutLink.href = '#';
+            aboutLink.textContent = 'About';
+            dropdownMenu.appendChild(aboutLink);
+
+            // Append dropdown menu to body
+            document.body.appendChild(dropdownMenu);
+
+            // Toggle dropdown menu visibility
+            hamburger.addEventListener('click', () => {
+                dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // Close dropdown menu when clicking the close button
+            closeBtn.addEventListener('click', () => {
+                dropdownMenu.style.display = 'none';
+            });
+        });
+
+        function logout() {
+            // Implement the function to delete cookies and redirect to signin page
+            deleteAllCookies();
+            window.location.href = "signin.html";
+        }
+
+        function deleteAllCookies() {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i];
+                const eqPos = cookie.indexOf("=");
+                const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+            }
+        }
+</script>
+
+<script src="script.js"></script>
+</body>
+</html>

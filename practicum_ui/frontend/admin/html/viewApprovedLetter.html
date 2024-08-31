@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Letter</title>
+    <link rel="stylesheet" href="../css/letterpage.css">
+    <style>
+        .letter-container {
+            margin: 50px auto;
+            max-width: 800px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .letter-footer {
+            border-top: 2px solid black;
+            font-size: 0.8em;
+            display: flex;
+            justify-content: space-between;
+            padding-top: 10px;
+            margin-top: 20px;
+        }
+        .letter-footer span {
+            font-weight: bold;
+        }
+        .letter-footer .letter-id {
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="letter-container">
+        <div id="letterContent">
+            <!-- Letter content will be displayed here -->
+        </div>
+    </div>
+
+    <!-- Include js-cookie library -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const letterId = urlParams.get('letterId');
+
+            try {
+                const response = await fetch(`http://localhost:6001/letter/${letterId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${Cookies.get('token')}`
+                    }
+                });
+
+                if (response.ok) {
+                    const letter = await response.json();
+                    document.getElementById('letterContent').innerHTML = letter.letterContent; 
+                } else {
+                    document.getElementById('letterContent').innerHTML = `<p>Error: Could not retrieve the letter.</p>`;
+                }
+            } catch (error) {
+                document.getElementById('letterContent').innerHTML = `<p>Error: ${error.message}</p>`;
+            }
+        });
+    </script>
+</body>
+</html>

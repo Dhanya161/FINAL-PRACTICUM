@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>practicum_home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/landingstyles.css">
+</head>
+<body>
+    <div class="image-container">
+        <img src="../../Knust Practicum/content-students-communicating-working.jpg" id="first-pic">
+        <div class="text-overlay">
+            <div class="layer">
+                <div class="nav">
+                    <div class="change" id="text-overlay1">
+                        <div class="hamburger">
+                            <div class="bars" id="bar1"></div>
+                            <div class="bars" id="bar2"></div> 
+                            <div class="bars" id="bar2"></div> 
+                        </div>
+                    </div>
+                    <h2 class="text-overlay2">KNUST PRACTICUM</h2>
+                </div>
+            </div>
+
+            <div class="navigations" id="text-overlay3">
+                <a id="home">HOME</a>
+                <a href="generateLetter.html" id="letter">LETTER</a>
+                <a href="training.html" id="training">TRAINING</a>
+                <a href="Opp.html">INTERNSHIPS</a>
+            </div>
+            <h1>easy, fast, convenient</h1>
+            <p>everyday brings with it a set of learning opportunities</p>
+        </div>
+    </div>
+
+    <div class="opportunities">
+        <h3>DISCOVER INTERNSHIP OPPORTUNITIES</h3>
+        <div class="pics">
+            <div class="paths">
+                <div class="sections">
+                    <div>
+                        <img src="../../Knust Practicum/landing1.jpg" alt="internship flyer">
+                    </div>  
+                    <div class="information">
+                        <div class="dash"></div>
+                        <p>
+                            Generate Internship Letters
+                            <br><br>
+                            <span id="beneath">Get an internship letter from your department</span>    
+                        </p>
+                        <br><br>
+                        <a href="generateLetter.html">Learn more ></a>
+                    </div>
+                </div>
+
+                <div class="sections">
+                    <div>
+                        <img src="../../Knust Practicum/landing2.jpg" alt="internship flyer">
+                    </div>
+                    <div class="information">
+                        <div class="dash"></div>
+                        <p>
+                            Explore Training Programs
+                            <br><br>
+                            <span id="beneath">Gain access to diverse training programs to prepare and train you for career life after school</span> 
+                        </p>
+                        <br><br>
+                        <a href="training.html">Learn more ></a>
+                    </div>
+                </div>
+                
+                <div class="sections">
+                    <div>
+                        <img src="../../Knust Practicum/landing3.jpg" alt="internship flyer">
+                    </div>
+                    <div class="information">
+                        <div class="dash"></div>
+                        <p>
+                            Discover Internship Opportunities
+                            <br><br>
+                            <span id="beneath">Access to a list of opportunities suited for your program</span> 
+                        </p>
+                        <br><br>
+                        <a href="Opp.html">Learn more ></a>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.querySelector('.hamburger');
+            const dropdownMenu = document.createElement('div');
+            dropdownMenu.className = 'dropdown-menu';
+
+            // Create and append close button
+            const closeBtn = document.createElement('span');
+            closeBtn.className = 'close-btn';
+            closeBtn.innerHTML = '&#10006;';
+            dropdownMenu.appendChild(closeBtn);
+
+            // Create and append dropdown links
+            const logoutLink = document.createElement('a');
+            logoutLink.href = '#';
+            logoutLink.textContent = 'Logout';
+            logoutLink.setAttribute('onclick', 'logout()');
+            dropdownMenu.appendChild(logoutLink);
+
+            const aboutLink = document.createElement('a');
+            aboutLink.href = '#';
+            aboutLink.textContent = 'About';
+            dropdownMenu.appendChild(aboutLink);
+
+            // Append dropdown menu to body
+            document.body.appendChild(dropdownMenu);
+
+            // Toggle dropdown menu visibility
+            hamburger.addEventListener('click', () => {
+                dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // Close dropdown menu when clicking the close button
+            closeBtn.addEventListener('click', () => {
+                dropdownMenu.style.display = 'none';
+            });
+        });
+
+        function logout() {
+            // Implement the function to delete cookies and redirect to signin page
+            deleteAllCookies();
+            window.location.href = "signin.html";
+        }
+
+        function deleteAllCookies() {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i];
+                const eqPos = cookie.indexOf("=");
+                const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+            }
+        }
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Letters Dashboard</title>
+</head>
+<body>
+    <h1>Letters Dashboard</h1>
+    <div>
+        <p>Total Letters: <span id="totalLetters">0</span></p>
+        <p>Approved Letters: <span id="approvedLetters">0</span></p>
+        <p>Pending Letters: <span id="pendingLetters">0</span></p>
+    </div>
+
+    <table id="lettersTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Letter Status</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody id="lettersTableBody">
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Function to fetch and display letter counts
+            const fetchLetterCounts = () => {
+                // Fetch total letters
+                fetch('letter/all')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('totalLetters').textContent = data.total;
+                    })
+                    .catch(error => console.error('Error fetching total letters:', error));
+
+                // Fetch approved letters
+                fetch('/admin/letters/')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('approvedLetters').textContent = data.approved;
+                    })
+                    .catch(error => console.error('Error fetching approved letters:', error));
+
+                // Fetch pending letters
+                fetch('/admin/letters/')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('pendingLetters').textContent = data.pending;
+                    })
+                    .catch(error => console.error('Error fetching pending letters:', error));
+            };
+
+            // Fetch and display letter data
+            const fetchAndDisplayLetters = () => {
+                fetch('/letter/all')
+                    .then(response => response.json())
+                    .then(data => {
+                        const tableBody = document.getElementById('lettersTableBody');
+                        tableBody.innerHTML = ''; // Clear any existing rows
+
+                        data.forEach(letter => {
+                            const row = document.createElement('tr');
+
+                            const nameCell = document.createElement('td');
+                            nameCell.textContent = letter.name;
+                            row.appendChild(nameCell);
+
+                            const statusCell = document.createElement('td');
+                            statusCell.textContent = letter.status;
+                            row.appendChild(statusCell);
+
+                            const dateCell = document.createElement('td');
+                            dateCell.textContent = new Date(letter.date).toLocaleDateString();
+                            row.appendChild(dateCell);
+
+                            tableBody.appendChild(row);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching letters:', error));
+            };
+
+            // Fetch and display counts and letter data on page load
+            fetchLetterCounts();
+            fetchAndDisplayLetters();
+        });
+    </script>
+</body>
+</html>

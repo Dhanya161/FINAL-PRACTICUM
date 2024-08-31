@@ -1,0 +1,303 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+body{
+    overflow-x:hidden;
+    background-color:whitesmoke;
+}
+
+.wholepage{
+    display: flex;
+    
+}
+
+.forms{
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    
+}
+
+form{   
+    margin-top:120px;
+    width:550px ;
+    border:solid 2px blue;
+    border-style: dashed;
+    height:60vh;
+}
+
+.white{
+    background-color:white;
+    width:50%;
+    height:100vh;
+}
+
+.blue{
+    background-color:rgb(4, 4, 34);
+    width:50%;
+    height:100vh;
+    /* padding:50%; */
+}
+
+
+img{
+    width: 70px;
+    height: 80px;
+}
+
+.logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+}
+
+
+
+input{
+     width: 450px;
+     margin-bottom: 20px;
+     padding: 10px;
+     border: solid 1px #d9d9d9;
+     border-radius: 10px;
+     outline: none;
+     transition: all 0.8s ease;
+     background: #e6e4e4;
+    box-shadow:inset 5px 5px 2px #b3b3b3dc,
+               inset -6px -6px 8px #ffffff ;
+}
+
+input:focus{
+    /* border:1px solid #a6a6a6; */
+}
+
+label{
+    text-align:left;
+    font-size: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin-bottom: 5px;
+}
+
+.button{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+button:hover{
+    cursor: pointer;
+    background-color: rgba(17, 70, 119, 0.856);
+    transition: 0.5s ease-in-out;
+}
+
+button{
+    color:white;
+    background-color:rgb(21, 21, 138);
+    width:150px;
+    padding:5px;
+    border-radius: 2px;
+    border: solid 1px rgb(21, 21, 138);
+    font-size: 17px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
+
+#admin{
+    background-color:white;
+    color:rgb(21, 21, 138);
+}
+
+.typewriter{
+    /* display: inline-block; */
+    /* overflow: hidden; */
+    /* white-space:nowrap; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 27%;
+}
+
+h1{
+    color:rgb(21, 21, 138);
+    font-size: 50px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width:90%;
+    white-space:nowrap;
+    overflow: hidden;
+    animation:
+        typing 2s steps(15),
+        cursor .4s step-end infinite alternate;
+}
+
+
+
+.admin{
+    padding:45px 20px;
+    background-color:rgb(21, 21, 138);
+    /* box-shadow: 16px 8px 5px 8px rgba(4, 1, 34, 0.342); */
+    color:white;
+}
+
+h2{
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 30px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+input{
+    display: flex;
+    justify-content: left;
+    margin-top: 5px;
+}
+
+
+
+/* Existing styles */
+
+.password-container {
+    position: relative;
+    width: 450px;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: solid 1px #d9d9d9;
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.8s ease;
+    background: #e6e4e4;
+    box-shadow: inset 5px 5px 2px #b3b3b3dc, inset -6px -6px 8px #ffffff;
+}
+
+input:focus {
+    /* Optional focus style */
+}
+
+.eye-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.eye-icon i {
+    font-size: 18px;
+}
+
+
+@media screen and (max-width: 600px) {
+    .password-container {
+        width: 300px;
+    }
+
+    input {
+        width: 300px;
+    }
+
+    button {
+        width: 200px;
+    }
+}
+
+
+
+
+@keyframes cursor{
+    50%{
+        border-color: transparent;
+    }
+}
+
+@keyframes typing{
+    from{
+        width:0;
+    }
+   
+}
+
+/*  */
+
+
+/* .typewriter h1{
+    display:inline-block;
+    animation:typing 0.5s steps(1, end) forwards, blink-caret 0.75s infinite;
+    border-right:solid 5px;
+} */
+
+/* @keyframes typing{
+    from{
+        width:0;
+    }
+    to {
+        width: auto;
+    }
+}
+
+@keyframes blink-caret{
+    from, to{
+        border-right-color: transparent;
+    }
+    50%{
+        border-right-color: black;
+    }
+} */
+
+@media screen and (max-width:600px) {
+    input{
+        width: 300px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: solid 1px #d9d9d9;
+        border-radius: 10px;
+        outline: none;
+        transition: all 0.8s ease;
+        background: #e6e4e4;
+       box-shadow:inset 5px 5px 2px #b3b3b3dc,
+                  inset -6px -6px 8px #ffffff ;
+   }
+
+   .inner{
+    width: 450px;
+    height: 450px;
+    background-color: white;
+    position: absolute;
+    top: 42%;
+    left:50%;
+    right:50%;
+    transform: translate(-61%, -50%);
+    margin: 50px ;
+    box-shadow: 0 10px 10px 10px rgba(4, 1, 34, 0.342);
+}
+
+button{
+    width: 200px;
+    padding:5px;
+}
+
+label{
+    font-size: 17px;
+}
+
+p{
+    font-size: 30px;
+    width:60%;
+}
+
+}

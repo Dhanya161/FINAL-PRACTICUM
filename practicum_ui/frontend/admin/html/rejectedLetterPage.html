@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejected Letter Details</title>
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/668d0bdd5f.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #f4f4f4;
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            height: 100vh;
+            position: fixed;
+        }
+        .sidebar h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .sidebar p {
+            margin: 0;
+            padding: 10px 0;
+        }
+        .sidebar a {
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .sidebar i {
+            margin-right: 10px;
+        }
+        .content {
+            margin-left: 260px;
+            padding: 20px;
+            width: calc(100% - 260px);
+        }
+        .letter-details {
+            margin: 20px 0;
+        }
+        .reason {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h3>KNUST PRACTICUM</h3>
+        <p><a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a></p>
+        <p><a href="pending.html"><i class="fa-solid fa-envelope-open-text"></i> Pending Letters</a></p>
+        <p><a href="approvedLetters.html"><i class="fa-solid fa-envelope-open"></i> Approved Letters</a></p>
+        <p><a href="Rejected.html"><i class="fa-solid fa-envelope"></i> Rejected Letters</a></p>
+        <p><a href="allLetters.html"><i class="fa-solid fa-envelope"></i> All Letters</a></p>
+        <p><a href="upload.html"><i class="fa-solid fa-upload"></i> Upload Opportunities</a></p>
+        <p><a href="AddAdmin.html"><i class="fas fa-user-plus"></i> Manage admins</a></p>
+        <p><a href="#" id="logoutLink"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></p>
+    </div>
+    <div class="content">
+        <div class="letter-details">
+            <h1>Rejected Letter Details</h1>
+            <p><strong>Letter ID:</strong> <span id="letterId"></span></p>
+            <p><strong>Company Name:</strong> <span id="companyName"></span></p>
+            <p><strong>Date Applied:</strong> <span id="dateApplied"></span></p>
+            <p><strong>Rejection Reason:</strong> <span id="rejectionReason" class="reason"></span></p>
+            
+        </div>
+    </div>
+
+    <script>
+        // Function to get query parameters from the URL
+        function getQueryParams() {
+            const params = {};
+            const queryString = window.location.search.slice(1);
+            const pairs = queryString.split('&');
+
+            pairs.forEach(pair => {
+                const [key, value] = pair.split('=');
+                params[decodeURIComponent(key)] = decodeURIComponent(value || '');
+            });
+
+            return params;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const queryParams = getQueryParams();
+            const letterIdElement = document.getElementById('letterId');
+            const companyNameElement = document.getElementById('companyName');
+            const dateAppliedElement = document.getElementById('dateApplied');
+            const rejectionReasonElement = document.getElementById('rejectionReason');
+
+            // Display letterId and other details if available
+            letterIdElement.textContent = queryParams.letterId || 'N/A';
+            companyNameElement.textContent = queryParams.companyName || 'N/A';
+            dateAppliedElement.textContent = queryParams.dateApplied ? new Date(queryParams.dateApplied).toLocaleDateString() : 'N/A';
+            rejectionReasonElement.textContent = queryParams.reason || 'No reason provided.';
+        });
+
+        // Logout functionality
+        document.getElementById('logoutLink').addEventListener('click', function() {
+            // Clear cookies or local storage if used for authentication
+            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+            // Redirect to login page
+            window.location.href = 'signin.html';
+        });
+    </script>
+</body>
+</html>

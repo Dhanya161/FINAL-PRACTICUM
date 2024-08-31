@@ -1,0 +1,32 @@
+.grid{
+    display:flex;
+    margin:50px 30px;
+    gap:50px;
+}
+
+.grid img{
+    margin: 20px;
+    width:350px;
+    height:300px;
+    border-radius:15px;
+}
+
+.card{
+    width:400px;
+    height:580px;
+    border:solid 1px black;
+    border-radius: 15px;
+}
+
+.card p, h3{
+    margin:0 20px;
+}
+
+.card a{
+    color: blue;
+    cursor: pointer;
+}
+
+.card a:hover{
+    color: rgba(0, 0, 255, 0.644);
+}
